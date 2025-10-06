@@ -35,6 +35,10 @@ int main() {
         array[i] = rand() % 10000;
     }
 
+    for (auto x: array) {
+        printf("%d ", x);
+    }
+
     printf("Enter a number to search: ");
     scanf("%d", &target);
 
