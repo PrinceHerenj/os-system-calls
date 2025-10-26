@@ -245,7 +245,7 @@ void * advertiser_thread(void * arg) {
     cout << "Advertiser initialized" << endl;
     sleep(6);
 
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 3; i++) {
         if (shm_ptr != nullptr) {
             char advert_msg[BUFFER_SIZE];
             snprintf(advert_msg, BUFFER_SIZE, "Advertisement %d", i + 1);
@@ -258,7 +258,7 @@ void * advertiser_thread(void * arg) {
                 perror("pthread_kill");
             }
         }
-        sleep(6);
+        sleep(2);
     }
 
 
