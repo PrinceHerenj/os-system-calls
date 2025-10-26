@@ -9,25 +9,25 @@ int lruCounter(vector<int>& pages, int capacity) {
     vector<int> frame;
     int pageFaults = 0;
     int time = 0;
-    
+
     cout << "LRU Counter Page Replacement Algorithm\n";
     cout << "======================================\n";
     cout << "Frame Capacity: " << capacity << "\n\n";
-    
+
     for (int page : pages) {
         time++;
         cout << "Accessing page " << page << " (time=" << time << "): ";
-        
+
         auto it = find(frame.begin(), frame.end(), page);
-        
+
         if (it == frame.end()) {
             pageFaults++;
             cout << "Page fault! ";
-            
+
             if (frame.size() == capacity) {
                 int lruPage = frame[0];
                 int lruTime = counter[frame[0]];
-                
+
                 // Find the least recently used page
                 for (int p : frame) {
                     if (counter[p] < lruTime) {
@@ -35,7 +35,7 @@ int lruCounter(vector<int>& pages, int capacity) {
                         lruPage = p;
                     }
                 }
-                
+
                 frame.erase(find(frame.begin(), frame.end(), lruPage));
                 counter.erase(lruPage);
                 cout << "Removed LRU page " << lruPage << " (last used at time " << lruTime << ") ";
@@ -45,9 +45,9 @@ int lruCounter(vector<int>& pages, int capacity) {
         } else {
             cout << "Page hit!";
         }
-        
+
         counter[page] = time;
-        
+
         // Display current frame state with timestamps
         cout << " | Frame: ";
         for (int p : frame) {
@@ -55,22 +55,22 @@ int lruCounter(vector<int>& pages, int capacity) {
         }
         cout << "\n";
     }
-    
+
     return pageFaults;
 }
 
 int main() {
     vector<int> pages = {7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2};
     int capacity = 3;
-    
+
     cout << "Page Reference String: ";
     for (int p : pages) cout << p << " ";
     cout << "\n\n";
-    
+
     int faults = lruCounter(pages, capacity);
-    
+
     cout << "\nTotal Page Faults: " << faults << endl;
     cout << "Page Fault Rate: " << (double)faults / pages.size() * 100 << "%" << endl;
-    
+
     return 0;
 }
