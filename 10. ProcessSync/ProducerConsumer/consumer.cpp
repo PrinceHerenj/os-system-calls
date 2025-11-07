@@ -13,9 +13,9 @@ int *buffer;
 int *in, *out;
 
 int sem_id;
-#define SEM_MUTEX 0
-#define SEM_EMPTY 1
-#define SEM_FULL 2
+#define SEM_MUTEX_ID 0
+#define SEM_EMPTY_ID 1
+#define SEM_FULL_ID 2
 
 void sem_wait(int sem_num) {
     sembuf sb;
@@ -65,14 +65,14 @@ int main() {
     }
 
     for (int i = 1; i <= NUM_ITEMS; i++) {
-        sem_wait(SEM_FULL);
-        sem_wait(SEM_MUTEX);
+        sem_wait(SEM_FULL_ID);
+        sem_wait(SEM_MUTEX_ID);
 
         int item = buffer[*out + 2];
         printf("Consumed: %d at index %d\n", item, *out);
         *out = (*out + 1) % BUF_SIZE;
-        sem_signal(SEM_MUTEX);
-        sem_signal(SEM_EMPTY);
+        sem_signal(SEM_MUTEX_ID);
+        sem_signal(SEM_EMPTY_ID);
         usleep(rand() % 150000);
     }
     return 0;
